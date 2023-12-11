@@ -1,5 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { navigate } from '../navigations/RootNavigator';
+import { MainRouteName } from '../constants/mainRouteName';
+import { LOGOUT } from '../constants/actionTypes';
+import { useDispatch } from 'react-redux';
 
 const axiosInstance = axios.create({
   baseURL: 'https://dev.profescipta.co.id/so-api', //belum pakai env
@@ -30,13 +34,14 @@ axiosInstance.interceptors.response.use(
       });
     }
 
-    if (
-      error?.response?.status === 403 ||
-      (error?.response?.status === 401 &&
-        error?.response?.data?.error?.message ===
-          'commonauth.VerifyTokenMiddleware: token verification failed')
-    ) {
-      // navigate(LOGOUT);
+    if (error?.response?.status === 401) {
+      // const dispatch = useDispatch();
+      // console.log("token expired");
+      // navigate(MainRouteName.LOGOUT);
+      // AsyncStorage.clear();
+      // dispatch({
+      //   type: LOGOUT
+      // });
     } else {
       return new Promise((resolve, reject) => {
         reject(error);
