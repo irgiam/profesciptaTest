@@ -34,13 +34,6 @@ const ItemList = ({navigation}) => {
         getItemList();
     }, [])
 
-    const logout = () => {
-        AsyncStorage.clear();
-        dispatch({
-            type: LOGOUT
-        });
-        navigation.push(MainRouteName.LOGIN);
-    }
 
     const getItemList = () => {
         setLoading(true);
@@ -53,9 +46,6 @@ const ItemList = ({navigation}) => {
                 setTotalProduct(res.data.reduce((prev,next) => prev + next.Quantity,0))
             }).catch(error => {
                 console.error('error get item: ', error.response.status);
-                if (error.response.status === 401){
-                    logout();
-                }
             }).finally(() => setLoading(false));
     }
 

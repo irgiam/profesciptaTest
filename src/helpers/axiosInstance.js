@@ -9,6 +9,8 @@ const axiosInstance = axios.create({
   baseURL: 'https://dev.profescipta.co.id/so-api', //belum pakai env
 });
 
+// let token = await AsyncStorage.getItem('token');
+
 axiosInstance.interceptors.request.use(
   async config => {
     const token = await AsyncStorage.getItem('token');
@@ -33,16 +35,17 @@ axiosInstance.interceptors.response.use(
         reject(error);
       });
     }
-
     if (error?.response?.status === 401) {
-      // const dispatch = useDispatch();
-      // console.log("token expired");
-      // navigate(MainRouteName.LOGOUT);
-      // AsyncStorage.clear();
-      // dispatch({
-      //   type: LOGOUT
-      // });
-    } else {
+      AsyncStorage.clear();
+      navigate(MainRouteName.LOGIN);
+    }
+    else if (error?.response?.status === 404) {
+      // console.log("not found");
+      // Promise.reject('error 404');
+      // console.log(token);
+      return;
+    }
+    else {
       return new Promise((resolve, reject) => {
         reject(error);
       });

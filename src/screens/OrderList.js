@@ -11,7 +11,7 @@ import OrderListButton from './components/OrderListButton';
 
 const OrderList = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
-    const [orderList, setOrderList] = useState([]);
+    const [orderList, setOrderList] = useState();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -41,9 +41,9 @@ const OrderList = ({ navigation }) => {
                 setOrderList(res.data);
             }).catch(error => {
                 console.error('error get order: ', error);
-                if (error.response.status === 401){
-                    logout();
-                }
+                // if (error.response.status === 401){
+                //     // logout();
+                // }
             }).finally(() => setLoading(false));
     }
 
@@ -72,7 +72,7 @@ const OrderList = ({ navigation }) => {
             </View>
             <View style={styles.header}>
                 <Text>Order list</Text>
-                <Text>Total Ttem: {orderList.length}</Text>
+                <Text>Total Ttem: {orderList?.length}</Text>
             </View>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.push(MainRouteName.ITEM_LIST)} style={styles.addButton}>

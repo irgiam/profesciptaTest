@@ -16,7 +16,6 @@ import {
         return {
           ...state,
           isLoggedIn: true,
-          token: payload.token,
         };
       case LOGIN_FAIL:
         return {
@@ -28,13 +27,11 @@ import {
         return {
           ...state,
           isLoggedIn: false,
-          token: null,
         };
       case CLEAR_AUTH_STATE:
         return {
           ...state,
           isLoggedIn: false,
-          token: null,
         };
       default:
         return state;

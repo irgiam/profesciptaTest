@@ -24,7 +24,7 @@ const Login = ({ navigation }) => {
             console.log("token->", token)
             dispatch({
                 type: LOGIN_SUCCESS,
-                payload: { token: token },
+                payload: { isLoggedIn: true },
             });
             navigation.navigate(MainRouteName.ORDER_LIST);
         }
@@ -49,7 +49,7 @@ const Login = ({ navigation }) => {
                 AsyncStorage.setItem('token', res.data.access_token);
                 dispatch({
                     type: LOGIN_SUCCESS,
-                    payload: { token: res.data.access_token },
+                    payload: { isLoggedIn: true },
                 });
                 navigation.navigate(MainRouteName.ORDER_LIST);
                 Promise.resolve();
@@ -57,7 +57,6 @@ const Login = ({ navigation }) => {
             })
             .catch(err => {
                 console.log('errorLogin', err);
-
                 Promise.reject();
                 return Promise.reject(err);
             });
